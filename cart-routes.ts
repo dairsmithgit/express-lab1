@@ -1,5 +1,4 @@
 import express from 'express';
-import cors from 'cors';
 import Cart from './model/Cart';
 const routes = express.Router();
 
