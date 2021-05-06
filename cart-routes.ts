@@ -32,3 +32,45 @@ routes.get("/carts", (req, res) => {
     res.json(results);
 });
 
+routes.get("/carts/:id", (req, res) => {
+    const id: number = parseInt(req.params.id);
+    const item:Cart|undefined = carts.find(item => item.id === id);
+    if (item) {
+        res.status(200);
+        res.json(item);
+    } else {
+        res.status(404);
+        res.send(`ID Not Found`);
+    }
+});
+
+routes.post("/carts", (req, res) => {
+    let newItem: Cart = req.body;
+    newItem.id = nextId;
+    nextId++;
+    carts.push(newItem);
+    res.status(201);
+    res.json(newItem);
+});
+
+routes.put("/carts/:id", (req, res) => {
+    const id: number = parseInt(req.params.id);
+    let item: Cart = req.body;
+    item.id = id;
+    const index: number = carts.findIndex(cart => cart.id === id);
+    if (index !== -1) {
+        carts[index] = item;
+        res.status(200);
+        res.json(item);
+    }
+});
+
+routes.delete("/carts/:id", (req, res) => {
+    const id: number = parseInt(req.params.id);
+    const index: number = carts.findIndex(cart => cart.id === id);
+    if (index !== -1) {
+        carts.splice(index, 1);
+    }
+    res.status(204);
+    res.send();
+});
