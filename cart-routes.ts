@@ -11,3 +11,8 @@ const carts: Cart[] = [
     { id: 6, product: "water bottle", price: 10, quantity: 5 }
 ];
 let nextId: number = 7;
+
+routes.get("/carts", (req, res) => {
+    res.json(carts);
+});
+
