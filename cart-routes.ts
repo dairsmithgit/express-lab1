@@ -74,3 +74,5 @@ routes.delete("/carts/:id", (req, res) => {
     res.status(204);
     res.send();
 });
+
+export default routes;
