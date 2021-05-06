@@ -13,6 +13,22 @@ const carts: Cart[] = [
 let nextId: number = 7;
 
 routes.get("/carts", (req, res) => {
-    res.json(carts);
+    let maxPrice: number = parseInt(req.query.maxPrice as string);
+    let prefix: string = req.query.prefix as string;
+    let pageSize: number = parseInt(req.query.pageSize as string);
+
+    let results = carts;
+    if (maxPrice) {
+        results = results.filter(cart => cart.price <= maxPrice);
+    }
+    if (prefix) {
+        results = results.filter(cart => cart.product.toLowerCase().includes(prefix));
+    }
+    if (pageSize) {
+        results = results.slice(0, pageSize);
+    }
+
+    res.status(200);
+    res.json(results);
 });
 
